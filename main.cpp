@@ -132,8 +132,17 @@ int main(int argc, char** argv){
     
     return 0;
 }
+/*
+ *Runtime Complexity:O(mn(l+logn))
+ Avg runtime: 0.109
+ 1k Movies, Large Prefix List: 0.115
+ 76k Movies, Medium Prefix List: 0.267
 
-/* Add your run time analysis for part 3 of the assignment here as commented block*/
+
+ Space Complexity: O(mn)
+ 
+ I designed my algorithm for lower time complexity rather than space complexity. I focused on having faster searches. I used a hash-map, sets, and priority_queues which all have an element of sorting involved to reduce having to traverse through the entire movie list. I used a set to store all movies in order to be able to efficienty retrieve them when looking for words of a specific prefix. I, then, used a hashmap of type <string, priority_queue> to store such data. This made it easy to find each prefix in the hashmap. 
+ * */
 
 bool parseLine(string &line, string &movieName, double &movieRating) {
     int commaIndex = line.find_last_of(",");
