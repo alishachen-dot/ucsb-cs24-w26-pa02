@@ -105,7 +105,7 @@ int main(int argc, char** argv){
     //  Find all movies that have that prefix and store them in an appropriate data structure
     //  If no movie with that prefix exists print the following message
     for(int i = 0; i < prefixes.size(); i++){
-        if(map.find(prefixes[i]) != map.end()){
+        if(map.find(prefixes[i]) != map.end() && !map.find(prefixes[i])->second.empty()){
             bool first = true;
             while(!map[prefixes[i]].empty()){
                 movies m = map[prefixes[i]].top();
@@ -120,7 +120,6 @@ int main(int argc, char** argv){
         } else{
              cout << "No movies found with prefix "<< prefixes[i] << endl;
         }
-        cout << endl;
     }
 
     //  For each prefix,
