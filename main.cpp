@@ -62,7 +62,8 @@ int main(int argc, char** argv){
     if (argc == 2){
             while(!alphabeticalMovies.empty()){     
                 alphabeticalMovies.top().printMovie();
-                alphabeticalMovies.pop();
+                cout << endl;
+		alphabeticalMovies.pop();
             }
             return 0;
     }

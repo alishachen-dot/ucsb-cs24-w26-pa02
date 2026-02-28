@@ -8,7 +8,7 @@ class utilities{
         
         struct alphabetical{
             bool operator()(const movies& m1, const movies& m2) const{
-                return m1.getTitle() < m2.getTitle();
+                return m1.getTitle() > m2.getTitle();
             };
         };
 
