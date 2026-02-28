@@ -51,11 +51,9 @@ int main(int argc, char** argv){
             movies m(movieName, movieRating);
             alphabeticalMovies.push(m);
             allMovies.insert(m);
-            cout << movieName << " has rating " << movieRating << endl;
             
             
     }
-    cout << endl;
 
     movieFile.close();
 
