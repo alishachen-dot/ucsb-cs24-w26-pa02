@@ -78,7 +78,6 @@ int main(int argc, char** argv){
     while (getline (prefixFile, line)) {
         if (!line.empty()) {
             prefixes.push_back(line);
-	    cout << line << endl;
             movies prefix(line, 0.0);
             priority_queue<movies, vector<movies>, utilities::numericalDecreasing> pq;
             auto it = allMovies.lower_bound(prefix);
