@@ -98,7 +98,6 @@ int main(int argc, char** argv){
         }
     }
 
-    cout << endl;
 
     vector<pair<string, movies>> bestMovies;
     //  For each prefix,
@@ -117,6 +116,7 @@ int main(int argc, char** argv){
                 cout << endl;
                 map[prefixes[i]].pop();
             }
+	    cout << endl;
         } else{
              cout << "No movies found with prefix "<< prefixes[i] << endl;
         }
