@@ -86,8 +86,8 @@ int main(int argc, char** argv){
             while(it != allMovies.end()){
                 string title = it->getTitle();
                 if (title.substr(0, line.size()) == line) {
-                    it->printMovie();
-		    cout << endl;
+                  //  it->printMovie();
+		  //  cout << endl;
                     pq.push(*it);
                     ++it;
                 } else {
