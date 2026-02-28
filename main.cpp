@@ -73,11 +73,11 @@ int main(int argc, char** argv){
         exit(1);
     }
 
-    vector<string> prefixes;
+    set<string> prefixes;
     unordered_map<string, priority_queue<movies, vector<movies>, utilities::numericalDecreasing>> map;
     while (getline (prefixFile, line)) {
         if (!line.empty()) {
-            prefixes.push_back(line);
+            prefixes.insert(line);
             movies prefix(line, 0.0);
             priority_queue<movies, vector<movies>, utilities::numericalDecreasing> pq;
             auto it = allMovies.lower_bound(prefix);
@@ -102,22 +102,22 @@ int main(int argc, char** argv){
     //  For each prefix,
     //  Find all movies that have that prefix and store them in an appropriate data structure
     //  If no movie with that prefix exists print the following message
-    for(int i = 0; i < prefixes.size(); i++){
-        if(map.find(prefixes[i]) != map.end() && !map.find(prefixes[i])->second.empty()){
+    for(const string& prefix: prefixes){
+        if(map.find(prefix) != map.end() && !map.find(prefix)->second.empty()){
             bool first = true;
-            while(!map[prefixes[i]].empty()){
-                movies m = map[prefixes[i]].top();
+            while(!map[prefix].empty()){
+                movies m = map[prefix].top();
                 if(first){
-                    bestMovies.push_back({prefixes[i], m});
+                    bestMovies.push_back({prefix, m});
                     first = false;
                 }
                 m.printMovie();
                 cout << endl;
-                map[prefixes[i]].pop();
+                map[prefix].pop();
             }
 	    cout << endl;
         } else{
-             cout << "No movies found with prefix "<< prefixes[i] << endl;
+             cout << "No movies found with prefix "<< prefix << endl;
         }
     }
 
