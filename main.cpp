@@ -48,7 +48,6 @@ int main(int argc, char** argv){
             // cout << movieName << " has rating " << movieRating << endl;
             // insert elements into your data structure
 
-            cout << movieName << ", " << movieRating << endl;
 	    movies m(movieName, movieRating);
             alphabeticalMovies.push(m);
             allMovies.insert(m);
