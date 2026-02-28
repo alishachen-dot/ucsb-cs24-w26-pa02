@@ -106,15 +106,16 @@ int main(int argc, char** argv){
     for(int i = 0; i < prefixes.size(); i++){
         if(map.find(prefixes[i]) != map.end() && !map.find(prefixes[i])->second.empty()){
             bool first = true;
-            while(!map[prefixes[i]].empty()){
-                movies m = map[prefixes[i]].top();
+	    priority_queue<movies, vector<movies>,utilities::numericalDecreasing> pqCopy = map[prefixes[i]];
+            while(!pqCopy.empty()){
+                movies m = pqCopy.top();
                 if(first){
                     bestMovies.push_back({prefixes[i], m});
                     first = false;
                 }
                 m.printMovie();
                 cout << endl;
-                map[prefixes[i]].pop();
+                pqCopy.pop();
             }
 	    cout << endl;
         } else{
