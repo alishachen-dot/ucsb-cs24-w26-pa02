@@ -21,7 +21,10 @@ class utilities{
 
         struct numericalDecreasing{
             bool operator()(const movies& m1, const movies& m2) const{
-                return m1.getRating() < m2.getRating();
+               if(m1.getRating() == m2.getRating()){
+                    return m1.getTitle() > m2.getTitle();
+                }
+		    return m1.getRating() < m2.getRating();
             };
         };
 };
