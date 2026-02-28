@@ -98,6 +98,8 @@ int main(int argc, char** argv){
         }
     }
 
+    cout << endl;
+
     vector<pair<string, movies>> bestMovies;
     //  For each prefix,
     //  Find all movies that have that prefix and store them in an appropriate data structure
