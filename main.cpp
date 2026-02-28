@@ -90,7 +90,7 @@ int main(int argc, char** argv){
 		  //  cout << endl;
                     pq.push(*it);
                     ++it;
-          `      } else {
+                } else {
                     break;
                 }
             }
