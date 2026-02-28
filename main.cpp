@@ -13,6 +13,7 @@
 #include <set>
 #include <queue>
 #include <sstream>
+#include <unordered_map>
 using namespace std;
 
 #include "utilities.h"
@@ -35,7 +36,9 @@ int main(int argc, char** argv){
     }
   
     // Create an object of a STL data-structure to store all the movies
-
+    
+    priority_queue<movies, vector<movies>, utilities::alphabetical> alphabeticalMovies;
+    set<movies, utilities::alphabetical> allMovies;
     string line, movieName;
     double movieRating;
     // Read each file and store the name and rating
@@ -44,12 +47,23 @@ int main(int argc, char** argv){
             // to construct your Movie objects
             // cout << movieName << " has rating " << movieRating << endl;
             // insert elements into your data structure
+
+            movies m(movieName, movieRating);
+            alphabeticalMovies.push(m);
+            allMovies.insert(m);
+            cout << movieName << " has rating " << movieRating << endl;
+            
+            
     }
+    cout << endl;
 
     movieFile.close();
 
     if (argc == 2){
-            //print all the movies in ascending alphabetical order of movie names
+            while(!alphabeticalMovies.empty()){     
+                alphabeticalMovies.top().printMovie();
+                alphabeticalMovies.pop();
+            }
             return 0;
     }
 
@@ -61,21 +75,60 @@ int main(int argc, char** argv){
     }
 
     vector<string> prefixes;
+    unordered_map<string, priority_queue<movies, vector<movies>, utilities::numericalDecreasing>> map;
     while (getline (prefixFile, line)) {
         if (!line.empty()) {
             prefixes.push_back(line);
+
+            movies prefix(line, 0.0);
+            priority_queue<movies, vector<movies>, utilities::numericalDecreasing> pq;
+            auto it = allMovies.lower_bound(prefix);
+
+            while(it != allMovies.end()){
+                string title = it->getTitle();
+                if (title.substr(0, line.size()) == line) {
+                    it->printMovie();
+		    cout << endl;
+                    pq.push(*it);
+                    ++it;
+                } else {
+                    break;
+                }
+            }
+            map[line] = pq; 
         }
     }
 
+    vector<pair<string, movies>> bestMovies;
     //  For each prefix,
     //  Find all movies that have that prefix and store them in an appropriate data structure
     //  If no movie with that prefix exists print the following message
-    cout << "No movies found with prefix "<<"<replace with prefix>" << endl;
+    for(int i = 0; i < prefixes.size(); i++){
+        if(map.find(prefixes[i]) != map.end()){
+            bool first = true;
+            while(!map[prefixes[i]].empty()){
+                movies m = map[prefixes[i]].top();
+                if(first){
+                    bestMovies.push_back({prefixes[i], m});
+                    first = false;
+                }
+                m.printMovie();
+                cout << endl;
+                map[prefixes[i]].pop();
+            }
+        } else{
+             cout << "No movies found with prefix "<< prefixes[i] << endl;
+        }
+        cout << endl;
+    }
 
     //  For each prefix,
     //  Print the highest rated movie with that prefix if it exists.
-    cout << "Best movie with prefix " << "<replace with prefix>" << " is: " << "replace with movie name" << " with rating " << std::fixed << std::setprecision(1) << "replace with movie rating" << endl;
+    for(auto p : bestMovies){
+        cout << "Best movie with prefix " << p.first << " is: " << p.second.getTitle() << " with rating " << std::fixed << std::setprecision(1) << p.second.getRating() << endl;
 
+    }
+    
     return 0;
 }
 
