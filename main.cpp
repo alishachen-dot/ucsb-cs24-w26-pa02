@@ -38,7 +38,7 @@ int main(int argc, char** argv){
     // Create an object of a STL data-structure to store all the movies
     
     priority_queue<movies, vector<movies>, utilities::alphabetical> alphabeticalMovies;
-    set<movies, utilities::alphabetical> allMovies;
+    set<movies, utilities::alphabetical_2> allMovies;
     string line, movieName;
     double movieRating;
     // Read each file and store the name and rating

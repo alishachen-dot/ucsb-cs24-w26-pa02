@@ -12,6 +12,13 @@ class utilities{
             };
         };
 
+	struct alphabetical_2{
+		bool operator()(const movies& m1, const movies& m2) const{
+			return m1.getTitle() < m2.getTitle();
+		};
+		
+	};
+
         struct numericalDecreasing{
             bool operator()(const movies& m1, const movies& m2) const{
                 return m1.getRating() < m2.getRating();
