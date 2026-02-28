@@ -73,15 +73,16 @@ int main(int argc, char** argv){
         exit(1);
     }
 
-    set<string> prefixes;
+    vector<string> prefixes;
     unordered_map<string, priority_queue<movies, vector<movies>, utilities::numericalDecreasing>> map;
     while (getline (prefixFile, line)) {
         if (!line.empty()) {
-            prefixes.insert(line);
+            prefixes.push_back(line);
             movies prefix(line, 0.0);
-            priority_queue<movies, vector<movies>, utilities::numericalDecreasing> pq;
+          
+	    priority_queue<movies, vector<movies>, utilities::numericalDecreasing> pq;
             auto it = allMovies.lower_bound(prefix);
-
+	   
             while(it != allMovies.end()){
                 string title = it->getTitle();
                 if (title.substr(0, line.size()) == line) {
@@ -89,7 +90,7 @@ int main(int argc, char** argv){
 		  //  cout << endl;
                     pq.push(*it);
                     ++it;
-                } else {
+          `      } else {
                     break;
                 }
             }
@@ -102,22 +103,22 @@ int main(int argc, char** argv){
     //  For each prefix,
     //  Find all movies that have that prefix and store them in an appropriate data structure
     //  If no movie with that prefix exists print the following message
-    for(const string& prefix: prefixes){
-        if(map.find(prefix) != map.end() && !map.find(prefix)->second.empty()){
+    for(int i = 0; i < prefixes.size(); i++){
+        if(map.find(prefixes[i]) != map.end() && !map.find(prefixes[i])->second.empty()){
             bool first = true;
-            while(!map[prefix].empty()){
-                movies m = map[prefix].top();
+            while(!map[prefixes[i]].empty()){
+                movies m = map[prefixes[i]].top();
                 if(first){
-                    bestMovies.push_back({prefix, m});
+                    bestMovies.push_back({prefixes[i], m});
                     first = false;
                 }
                 m.printMovie();
                 cout << endl;
-                map[prefix].pop();
+                map[prefixes[i]].pop();
             }
 	    cout << endl;
         } else{
-             cout << "No movies found with prefix "<< prefix << endl;
+             cout << "No movies found with prefix "<< prefixes[i] << endl;
         }
     }
 
